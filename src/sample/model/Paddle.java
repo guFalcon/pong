@@ -42,6 +42,7 @@ public class Paddle implements GameObject {
 
     @Override
     public void initialize(PongGame game, Pane pane) {
+        line.setStrokeWidth(3D);
         pane.getChildren().add(line);
         minY = 0D;
         maxY = game.getHeight();
