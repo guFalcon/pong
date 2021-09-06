@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Pong" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="sample.Main" />
+    <module name="pong" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
