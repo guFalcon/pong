@@ -1,4 +1,4 @@
-package sample;
+package sample.model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -6,10 +6,15 @@ import javafx.scene.shape.Line;
 
 public class Paddle implements GameObject {
 
-    private Line line = new Line(0, 0, 0, 60);
+    public static final double SIZE = 60D;
+    public static final double MOVEMENT_DELTA = 10D;
+
+    private Line line = new Line(0, 0, 0, SIZE);
     private Point2D position = new Point2D(0, 0);
     private boolean isUp;
     private boolean isDown;
+    private double maxY;
+    private double minY;
 
     public Point2D getPosition() {
         return position;
@@ -38,18 +43,38 @@ public class Paddle implements GameObject {
     @Override
     public void initialize(PongGame game, Pane pane) {
         pane.getChildren().add(line);
+        minY = 0D;
+        maxY = game.getHeight();
     }
 
     @Override
     public void update(PongGame game, float gameTime) {
-        int modifier = 0;
-        if (isUp)
-            modifier = -10;
-        if (isDown)
-            modifier = 10;
+        double modifier = getModifier();
+        if (modifier != 0D) {
+            position = new Point2D(position.getX(), position.getY() + getModifier());
+            position = clampPosition(position);
+        }
+    }
+
+    private double getModifier() {
         if (isUp && isDown)
-            modifier = 0;
-        position = new Point2D(position.getX(), position.getY() + modifier);
+            return 0D;
+
+        if (isUp)
+            return -MOVEMENT_DELTA;
+        if (isDown)
+            return MOVEMENT_DELTA;
+
+        return 0D;
+    }
+
+    private Point2D clampPosition(Point2D position) {
+        double maxYPos = maxY - SIZE;
+        if (position.getY() > maxYPos)
+            return new Point2D(position.getX(), maxYPos);
+        if (position.getY() < 0)
+            return new Point2D(position.getX(), 0);
+        return position;
     }
 
     @Override

@@ -2,16 +2,20 @@ package sample.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import sample.Model;
-import sample.Paddle;
+import sample.Main;
+import sample.model.Model;
+import sample.model.Paddle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+
+    private Model model;
 
     @FXML
     private Pane pane;
@@ -20,16 +24,18 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         pane.setFocusTraversable(true);
         pane.requestFocus();
-        pane.setStyle("-fx-background-color: #9a4e4e");
+        // pane.setStyle("-fx-background-color: #9a4e4e");
 
-        Model model = new Model();
-        model.initialize(pane);
+        model = new Model();
+        model.initialize(pane, Main.WIDTH, Main.HEIGHT);
+    }
 
-        pane.setOnKeyPressed(event -> {
+    public void setInputHandlers(Scene scene) {
+        scene.setOnKeyPressed(event -> {
             handleInput(model, event, true);
         });
 
-        pane.setOnKeyReleased(event -> {
+        scene.setOnKeyReleased(event -> {
             handleInput(model, event, false);
         });
     }
