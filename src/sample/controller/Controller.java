@@ -2,14 +2,11 @@ package sample.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import sample.Model;
 import sample.Paddle;
-import sample.PongGame;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +20,7 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         pane.setFocusTraversable(true);
         pane.requestFocus();
-        // stackPane.setStyle("-fx-background-color: #9a4e4e");
+        pane.setStyle("-fx-background-color: #9a4e4e");
 
         Model model = new Model();
         model.initialize(pane);

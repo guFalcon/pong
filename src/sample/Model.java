@@ -19,9 +19,9 @@ public class Model {
     public void initialize(Pane pane) {
         PongGame game = new PongGame(pane);
         paddle1 = new Paddle();
-        paddle2.setPosition(new Point2D(50, pane.getHeight() / 2 + 30));
+        paddle1.setPosition(new Point2D(50, pane.getHeight() / 2 + 30));
         paddle2 = new Paddle();
-        paddle2.setPosition(new Point2D(pane.getWidth() - 50, pane.getHeight() / 2 + 30));
+        paddle2.setPosition(new Point2D(pane.getWidth() - 500, pane.getHeight() / 2 + 30));
         game.add(paddle1);
         game.add(paddle2);
         Thread thread = new Thread(game);
