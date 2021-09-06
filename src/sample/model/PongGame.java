@@ -53,6 +53,11 @@ public class PongGame implements Runnable {
                 }
                 time = curr;
             }
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                running = false;
+            }
         }
     }
 

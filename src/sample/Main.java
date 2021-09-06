@@ -17,17 +17,18 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/game.fxml"));
 
         Parent root = loader.load();
-        Controller controller = loader.getController();
-
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        controller.setInputHandlers(scene);
 
-        primaryStage.setTitle("Pong!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Controller controller = loader.getController();
+        controller.setInputHandlers(scene);
+        stage.setOnCloseRequest(event -> controller.shutdownModel());
+
+        stage.setTitle("Pong!");
+        stage.setScene(scene);
+        stage.show();
     }
 }

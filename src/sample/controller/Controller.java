@@ -15,19 +15,23 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    private Model model;
-
     @FXML
     private Pane pane;
+
+    private Model model;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pane.setFocusTraversable(true);
         pane.requestFocus();
         // pane.setStyle("-fx-background-color: #9a4e4e");
-
         model = new Model();
         model.initialize(pane, Main.WIDTH, Main.HEIGHT);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> model.shutdown()));
+    }
+
+    public void shutdownModel() {
+        model.shutdown();
     }
 
     public void setInputHandlers(Scene scene) {

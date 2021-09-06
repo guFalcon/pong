@@ -7,6 +7,8 @@ public class Model {
 
     public static final double BORDER = 50D;
 
+    private PongGame game;
+
     private Paddle paddle1;
     private Paddle paddle2;
 
@@ -19,8 +21,7 @@ public class Model {
     }
 
     public void initialize(Pane pane, double width, double height) {
-        PongGame game = new PongGame(pane, width, height);
-
+        game = new PongGame(pane, width, height);
         double centerY = game.getHeight() / 2D - Paddle.SIZE / 2D;
 
         paddle1 = new Paddle();
@@ -33,5 +34,9 @@ public class Model {
 
         Thread thread = new Thread(game);
         thread.start();
+    }
+
+    public void shutdown() {
+        game.setRunning(false);
     }
 }
