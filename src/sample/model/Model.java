@@ -1,7 +1,7 @@
 package sample.model;
 
 import javafx.geometry.Point2D;
-import javafx.scene.layout.Pane;
+import javafx.scene.canvas.Canvas;
 
 public class Model {
 
@@ -20,8 +20,8 @@ public class Model {
         return paddle2;
     }
 
-    public void initialize(Pane pane, double width, double height) {
-        game = new PongGame(pane, width, height);
+    public void initialize(Canvas canvas, double width, double height) {
+        game = new PongGame(canvas, width, height);
         double centerY = game.getHeight() / 2D - Paddle.SIZE / 2D;
 
         paddle1 = new Paddle();

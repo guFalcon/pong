@@ -3,9 +3,9 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import sample.Main;
 import sample.model.Model;
 import sample.model.Paddle;
@@ -16,17 +16,16 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
-    private Pane pane;
+    private Canvas canvas;
 
     private Model model;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        pane.setFocusTraversable(true);
-        pane.requestFocus();
-        // pane.setStyle("-fx-background-color: #9a4e4e");
+        canvas.setFocusTraversable(true);
+        canvas.requestFocus();
         model = new Model();
-        model.initialize(pane, Main.WIDTH, Main.HEIGHT);
+        model.initialize(canvas, Main.WIDTH, Main.HEIGHT);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> model.shutdown()));
     }
 

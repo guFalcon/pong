@@ -1,12 +1,13 @@
 package sample.model;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public interface GameObject {
 
-    void initialize(PongGame game, Pane pane);
+    void initialize(PongGame game, Canvas canvas);
 
-    void update(PongGame game, float gameTime);
+    void update(GameTime gameTime);
 
-    void draw(PongGame game, float gameTime);
+    void draw(GameTime gameTime, GraphicsContext context);
 }

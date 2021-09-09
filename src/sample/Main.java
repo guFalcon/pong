@@ -7,10 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.controller.Controller;
 
+/**
+ * Thanks to EdenCoding
+ * https://github.com/edencoding/javafx-game-dev
+ */
 public class Main extends Application {
 
-    public static final double WIDTH = 800;
-    public static final double HEIGHT = 400;
+    public static final double WIDTH = 750;
+    public static final double HEIGHT = 450;
 
     public static void main(String[] args) {
         launch(args);

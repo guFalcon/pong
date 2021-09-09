@@ -1,18 +1,19 @@
 package sample.model;
 
 import javafx.geometry.Point2D;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Paddle implements GameObject {
 
     public static final double SIZE = 60D;
-    public static final double MOVEMENT_DELTA = 10D;
+    public static final double MOVEMENT_DELTA = 5D;
 
-    private Line line = new Line(0, 0, 0, SIZE);
     private Point2D position = new Point2D(0, 0);
+
     private boolean isUp;
     private boolean isDown;
+
     private double maxY;
     private double minY;
 
@@ -41,15 +42,13 @@ public class Paddle implements GameObject {
     }
 
     @Override
-    public void initialize(PongGame game, Pane pane) {
-        line.setStrokeWidth(3D);
-        pane.getChildren().add(line);
+    public void initialize(PongGame game, Canvas canvas) {
         minY = 0D;
         maxY = game.getHeight();
     }
 
     @Override
-    public void update(PongGame game, float gameTime) {
+    public void update(GameTime gameTime) {
         double modifier = getModifier();
         if (modifier != 0D) {
             position = new Point2D(position.getX(), position.getY() + getModifier());
@@ -79,8 +78,8 @@ public class Paddle implements GameObject {
     }
 
     @Override
-    public void draw(PongGame game, float gameTime) {
-        line.setTranslateX(position.getX());
-        line.setTranslateY(position.getY());
+    public void draw(GameTime gameTime, GraphicsContext context) {
+        context.setLineWidth(5D);
+        context.strokeLine(position.getX(), position.getY(), position.getX(), position.getY() + SIZE);
     }
 }
