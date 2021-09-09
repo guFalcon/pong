@@ -44,4 +44,18 @@ public class Model extends Game {
     public void initialize(Game game, Canvas canvas) {
         reset();
     }
+
+    @Override
+    public void update(GameTime gt) {
+        if (ball.getPosition().getX() <= paddle1.getPosition().getX() && ballInYRangeOf(paddle1)) {
+            ball.reflectX();
+        }
+        if (ball.getPosition().getX() + Ball.SIZE >= paddle2.getPosition().getX() && ballInYRangeOf(paddle2)) {
+            ball.reflectX();
+        }
+    }
+
+    private boolean ballInYRangeOf(Paddle paddle) {
+        return ball.getPosition().getY() > paddle.getPosition().getY() && ball.getPosition().getY() + Ball.SIZE < paddle.getPosition().getY() + Paddle.SIZE;
+    }
 }

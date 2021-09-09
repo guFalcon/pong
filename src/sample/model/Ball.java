@@ -90,22 +90,30 @@ public class Ball implements GameObject {
 
         if (position.getX() > maxXPos) {
             newX = maxXPos;
-            direction = new Point2D(-direction.getX(), direction.getY());
+            reflectX();
         }
         if (position.getX() < 0) {
             newX = 0;
-            direction = new Point2D(-direction.getX(), direction.getY());
+            reflectX();
         }
         if (position.getY() > maxYPos) {
             newY = maxYPos;
-            direction = new Point2D(direction.getX(), -direction.getY());
+            reflectY();
         }
         if (position.getY() < 0) {
             newY = 0;
-            direction = new Point2D(direction.getX(), -direction.getY());
+            reflectY();
         }
 
         return new Point2D(newX, newY);
+    }
+
+    public void reflectX() {
+        direction = new Point2D(-direction.getX(), direction.getY());
+    }
+
+    public void reflectY() {
+        direction = new Point2D(direction.getX(), -direction.getY());
     }
 
     @Override
