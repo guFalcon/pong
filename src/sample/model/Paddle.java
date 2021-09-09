@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Paddle implements GameObject {
 
     public static final double SIZE = 60D;
+    public static final double WIDTH = 8D;
     public static final double MOVEMENT_DELTA = 5D;
 
     private Point2D position = new Point2D(0, 0);
@@ -79,7 +80,7 @@ public class Paddle implements GameObject {
 
     @Override
     public void draw(GameTime gameTime, GraphicsContext context) {
-        context.setLineWidth(5D);
+        context.setLineWidth(WIDTH);
         context.strokeLine(position.getX(), position.getY(), position.getX(), position.getY() + SIZE);
     }
 }

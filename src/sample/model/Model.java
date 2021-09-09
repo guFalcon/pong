@@ -2,6 +2,10 @@ package sample.model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Model extends Game {
 
@@ -11,6 +15,9 @@ public class Model extends Game {
 
     private Paddle paddle1;
     private Paddle paddle2;
+
+    private int p1Counter;
+    private int p2Counter;
 
     public Model(Canvas canvas, double width, double height) {
         super(canvas, width, height);
@@ -25,6 +32,12 @@ public class Model extends Game {
     }
 
     public void reset() {
+        p1Counter = 0;
+        p2Counter = 0;
+        resetGame();
+    }
+
+    private void resetGame() {
         clear();
         double centerY = getHeight() / 2D - Paddle.SIZE / 2D;
 
@@ -47,12 +60,39 @@ public class Model extends Game {
 
     @Override
     public void update(GameTime gt) {
-        if (ball.getPosition().getX() <= paddle1.getPosition().getX() && ballInYRangeOf(paddle1)) {
+        double posLeft = ball.getPosition().getX();
+        if (ball.getDirection().getX() < 0 &&
+                posLeft <= paddle1.getPosition().getX() + Paddle.WIDTH / 2D &&
+                posLeft >= paddle1.getPosition().getX() - Paddle.WIDTH / 2D &&
+                ballInYRangeOf(paddle1)) {
             ball.reflectX();
         }
-        if (ball.getPosition().getX() + Ball.SIZE >= paddle2.getPosition().getX() && ballInYRangeOf(paddle2)) {
+
+        double posRight = ball.getPosition().getX() + Ball.SIZE;
+        if (ball.getDirection().getX() > 0 &&
+                posRight >= paddle2.getPosition().getX() - Paddle.WIDTH / 2D &&
+                posRight <= paddle2.getPosition().getX() + Paddle.WIDTH / 2D &&
+                ballInYRangeOf(paddle2)) {
             ball.reflectX();
         }
+
+        double maxXPos = getWidth() - Ball.SIZE;
+        if (ball.getPosition().getX() > maxXPos) {
+            p1Counter++;
+            resetGame();
+        }
+        if (ball.getPosition().getX() < 0) {
+            p2Counter++;
+            resetGame();
+        }
+    }
+
+    @Override
+    public void draw(GameTime gt, GraphicsContext context) {
+        context.setFill(Color.BLACK);
+        context.setFont(Font.font("Tahoma", FontWeight.SEMI_BOLD, 20));
+        context.fillText(p1Counter + "", getWidth() / 4, getHeight() / 10);
+        context.fillText(p2Counter + "", 3 * getWidth() / 4, getHeight() / 10);
     }
 
     private boolean ballInYRangeOf(Paddle paddle) {

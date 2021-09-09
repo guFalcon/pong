@@ -88,14 +88,6 @@ public class Ball implements GameObject {
         double newX = position.getX();
         double newY = position.getY();
 
-        if (position.getX() > maxXPos) {
-            newX = maxXPos;
-            reflectX();
-        }
-        if (position.getX() < 0) {
-            newX = 0;
-            reflectX();
-        }
         if (position.getY() > maxYPos) {
             newY = maxYPos;
             reflectY();
