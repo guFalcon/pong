@@ -24,8 +24,8 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
-        model = new Model();
-        model.initialize(canvas, Main.WIDTH, Main.HEIGHT);
+        model = new Model(canvas, Main.WIDTH, Main.HEIGHT);
+        model.start();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> model.shutdown()));
     }
 
@@ -34,16 +34,13 @@ public class Controller implements Initializable {
     }
 
     public void setInputHandlers(Scene scene) {
-        scene.setOnKeyPressed(event -> {
-            handleInput(model, event, true);
-        });
-
-        scene.setOnKeyReleased(event -> {
-            handleInput(model, event, false);
-        });
+        scene.setOnKeyPressed(event -> handleInput(model, event, true));
+        scene.setOnKeyReleased(event -> handleInput(model, event, false));
     }
 
     private void handleInput(Model model, KeyEvent event, boolean b) {
+        if (event.getCode() == KeyCode.SPACE)
+            model.reset();
         handleInputForPaddle(model.getPaddle1(), event, b, KeyCode.W, KeyCode.S);
         handleInputForPaddle(model.getPaddle2(), event, b, KeyCode.UP, KeyCode.DOWN);
     }

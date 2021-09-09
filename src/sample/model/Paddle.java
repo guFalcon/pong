@@ -42,7 +42,7 @@ public class Paddle implements GameObject {
     }
 
     @Override
-    public void initialize(PongGame game, Canvas canvas) {
+    public void initialize(Game game, Canvas canvas) {
         minY = 0D;
         maxY = game.getHeight();
     }

@@ -56,7 +56,7 @@ public class Ball implements GameObject {
     }
 
     @Override
-    public void initialize(PongGame game, Canvas canvas) {
+    public void initialize(Game game, Canvas canvas) {
         random = new Random(System.currentTimeMillis());
 
         position = new Point2D(game.getWidth() / 2D - SIZE / 2D, game.getHeight() / 2D - SIZE / 2D);
