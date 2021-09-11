@@ -7,11 +7,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Model extends Game {
 
     public static final double BORDER = 50D;
 
-    private Ball ball;
+    private Set<Ball> balls = new HashSet<>();
+    private Set<Ball> ballsToAdd = new HashSet<>();
+    private Set<Ball> ballsToRemove = new HashSet<>();
 
     private Paddle paddle1;
     private Paddle paddle2;
@@ -41,8 +46,7 @@ public class Model extends Game {
         clear();
         double centerY = getHeight() / 2D - Paddle.SIZE / 2D;
 
-        ball = new Ball();
-        add(ball);
+        addBall(new Ball(this));
 
         paddle1 = new Paddle();
         paddle1.setPosition(new Point2D(BORDER, centerY));
@@ -53,6 +57,16 @@ public class Model extends Game {
         add(paddle2);
     }
 
+    public void addBall(Ball ball) {
+        ballsToAdd.add(ball);
+        add(ball);
+    }
+
+    public void removeBall(Ball ball) {
+        ballsToRemove.add(ball);
+        remove(ball);
+    }
+
     @Override
     public void initialize(Game game, Canvas canvas) {
         reset();
@@ -60,31 +74,48 @@ public class Model extends Game {
 
     @Override
     public void update(GameTime gt) {
+        balls.removeAll(ballsToRemove);
+        balls.addAll(ballsToAdd);
+        ballsToRemove.clear();
+        ballsToAdd.clear();
+        for (Ball ball : balls)
+            updateBall(ball);
+    }
+
+    public void updateBall(Ball ball) {
         double posLeft = ball.getPosition().getX();
         if (ball.getDirection().getX() < 0 &&
                 posLeft <= paddle1.getPosition().getX() + Paddle.WIDTH / 2D &&
                 posLeft >= paddle1.getPosition().getX() - Paddle.WIDTH / 2D &&
-                ballInYRangeOf(paddle1)) {
-            ball.reflectX();
+                isOnPaddleY(paddle1, ball)) {
+            ball.reflectX(true);
         }
 
         double posRight = ball.getPosition().getX() + Ball.SIZE;
         if (ball.getDirection().getX() > 0 &&
                 posRight >= paddle2.getPosition().getX() - Paddle.WIDTH / 2D &&
                 posRight <= paddle2.getPosition().getX() + Paddle.WIDTH / 2D &&
-                ballInYRangeOf(paddle2)) {
-            ball.reflectX();
+                isOnPaddleY(paddle2, ball)) {
+            ball.reflectX(true);
         }
 
         double maxXPos = getWidth() - Ball.SIZE;
         if (ball.getPosition().getX() > maxXPos) {
             p1Counter++;
-            resetGame();
+            removeBall(ball);
+            if (balls.size() - ballsToRemove.size() + ballsToAdd.size() == 0)
+                resetGame();
         }
         if (ball.getPosition().getX() < 0) {
             p2Counter++;
-            resetGame();
+            removeBall(ball);
+            if (balls.size() - ballsToRemove.size() + ballsToAdd.size() == 0)
+                resetGame();
         }
+    }
+
+    private boolean isOnPaddleY(Paddle paddle, Ball ball) {
+        return ball.getPosition().getY() + Ball.SIZE > paddle.getPosition().getY() && ball.getPosition().getY() < paddle.getPosition().getY() + Paddle.SIZE;
     }
 
     @Override
@@ -93,9 +124,5 @@ public class Model extends Game {
         context.setFont(Font.font("Tahoma", FontWeight.SEMI_BOLD, 20));
         context.fillText(p1Counter + "", getWidth() / 4, getHeight() / 10);
         context.fillText(p2Counter + "", 3 * getWidth() / 4, getHeight() / 10);
-    }
-
-    private boolean ballInYRangeOf(Paddle paddle) {
-        return ball.getPosition().getY() > paddle.getPosition().getY() && ball.getPosition().getY() + Ball.SIZE < paddle.getPosition().getY() + Paddle.SIZE;
     }
 }
