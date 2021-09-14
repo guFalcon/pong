@@ -1,6 +1,6 @@
-= My Project
-firstname lastname
-1.0.0, yyyy-mm-dd: Some notes
+= Pong
+Gerald Unterrainer
+1.0.0, 2021-09-14: Code generated during first day of 'Summer School'
 ifndef::imagesdir[:imagesdir: images]
 //:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
 :sourcedir: ../src/main/java
@@ -14,8 +14,37 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Header 1
+== Pong
+Pong is one of the first computer games that ever created, this simple "tennis like" game features two paddles and a ball. +
+The goal is to defeat your opponent by being the first one to gain 10 points. A player gets a point once the opponent misses a ball.
 
+Source: https://www.ponggame.org/
 
-=== Header 2
+== Build a simple game
+* Using a canvas of a simple JavaFX project, draw two paddles.
+* Then hook the paddles up to user-input.
+* Move the ball at constant velocity and let it bounce off all of the four walls.
+
+== Make it competitive
+. Repository herunterladen (clonen) und auf euren Rechnern zum Laufen bringen.
+. Eine Klasse 'Ball' erstellen, die 'GameObject' implementiert, nach dem Muster von 'Paddle'.
+. Der Ball soll nicht nur eine Position haben, sondern auch einen Richtungsvektor (Point2D oder double X und double Y). Der Vektor wird auf die Position aufaddiert bei jedem Update.
+. Wenn die Y-Koordinate des Balls <= 0 ist, dann spiegelt ihr den Richtungsvektor oben an der Kante. Wenn die Y-Koordinate des Balls >= maxX ist, dann … unten an der Kante. Spiegelung eines Richtungsvektors geschieht, indem man eine Koordinate *-1 nimmt. Welche müsst ihr selber rausfinden. :)
+. Wenn ihr das Ganze jetzt noch für X macht, dann sollte der Ball mal unendlich in eurem Spielfeld umherspringen.
+. Jetzt könnt ihr noch einen Stand-Zähler machen (würde vorschlagen 2 Zahlen oben am Rand rechts und links). Die Zähler könnt ihr erhöhen, wenn der Ball die X-Grenze des jeweiligen Spielers überschreitet.
+. Dann solltet ihr noch, wenn das passiert, den Ball resetten (von der Mitte aus mit einem neuen, zufälligen, Richtungsvektor starten.
+. Das könnt ihr dann auch noch am Anfang des Spieles machen, damit der Ball nicht immer den selben Startvektor hat am Beginn des Spieles (Random-Klasse… https://stackoverflow.com/a/12458415). Als Seed könnt ihr System.currentTimeInMillis() nehmen.
+. Die Paddles sollten jetzt noch kollidieren mit dem Ball (wenn Ball die X-Koordinate des Paddles erreicht hat, checken, ob die Y-Koordinate des Balles zwischen denen des Paddles liegt und ev. spiegeln).
+. Euer Pong ist jetzt fertig. Jetzt könnt ihr noch Zusatzaufgaben machen… Sucht euch was aus und baut das, wenn ihr glaubt, dass es eine gute Idee ist und das Spiel interessanter macht :)
+
+=== Ideen
+* Ball wechselt zufällig die Geschwindigkeit
+* Ball wechselt die Farbe
+* Wenn Ball Blau und er wird vom Paddle getroffen, dann 'spawned' er einen zweiten Ball, der mit zufälligem Vektor startet, wo der Ball getroffen wurde.
+* Wenn ein Ball das Spielfeld verlässt, dann den Ball rausnehmen.
+* Wenn der letzte Ball das Spielfeld verlässt, dann gibt es erst einen Punkt.
+* Hindernisse, die zufällig am Spielfeld auftauchen.
+* ...
+
+Zufällige Elemente sollten selten auftreten; Wahrscheinlichkeiten sorgsam wählen. Viel Spaß.
 
